@@ -143,7 +143,7 @@ def analyze_url(url: str) -> dict:
             "findings": [f"Malformed URL structure detected: {str(e)}"]
         }
 
-    domain = extracted.top_domain_under_public_suffix
+    domain = extracted.registered_domain
     subdomain = extracted.subdomain
     path = parsed.path
     hostname = parsed.hostname or ""
