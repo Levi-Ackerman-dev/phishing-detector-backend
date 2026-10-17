@@ -20,7 +20,7 @@ cache = TTLCache(maxsize=1000, ttl=86400)
 # Configure CORS (We will restrict allow_origins when deploying to the cloud)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"], 
+    allow_origins=["https://phishing-detectoor.netlify.app"], 
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
