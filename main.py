@@ -17,7 +17,7 @@ app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 # 2. Initialize In-Memory Cache (Stores 1000 URLs, expires after 24 hours / 86400 seconds)
 cache = TTLCache(maxsize=1000, ttl=86400)
 
-# Configure CORS (We will restrict allow_origins when deploying to the cloud)
+# Configure CORS (Restricted to Netlify frontend)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["https://phishing-detectoor.netlify.app"], 
@@ -46,6 +46,10 @@ async def scan_url(request: Request, payload: ScanRequest):
         cache[target_url] = result  # Save to cache for the next user
         return result
     except Exception as e:
+        import traceback
+        print("=== CRITICAL BACKEND CRASH ===")
+        traceback.print_exc()
+        print("==============================")
         raise HTTPException(status_code=500, detail=str(e))
 
 @app.get("/")
